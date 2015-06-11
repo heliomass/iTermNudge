@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Note that this script is pretty dumb and will blindly pass
+# the content you give it.
+#
+# For usage of the escape codes, see here:
+#    https://www.iterm2.com/documentation-escape-codes.html
+#
+
+# Error codes:
+#
+# 0 All OK
+# 1 Bad arguments
+
+# Help
+function show_help() {
+
+cat << EOF
+Usage:
+	--color
+		Changes the terminal colour.
+
+		Use one of the following letters followed by
+		a standard hex colour code:
+
+		g = foreground
+		h = background
+		i = bold color
+		j = selection color
+		k = selected text color
+		l = cursor
+		m = cursor text
+
+		E.g. Turn the background white:
+		iterm_nudge --background hffffff
+
+	--profile
+		Changes the profile to the supplied name.
+
+	--cursor
+		Changes the cursor.
+
+		Use the following codes:
+		0: Block
+		1: Vertical bar
+		2: Underline
+
+	--force
+		Use this to output the escape codes even if \$TERM_PROGRAM isn't
+		set to iTerm. Useful if you're in an ssh session, but you weren't able
+		to pass through TERM_PROGRAM from the client.
+
+	Run the command without any arguments to discover if you're in an iTerm or not.
+	E.g.:
+
+	iterm_nudge && echo "You're in an iTerm session" || echo "You're not running iTerm :("
+
+EOF
+
+}
+
+# Transformation options
+color=
+profile=
+cursor=
+
+# Force if not iTerm
+force=0
+
+# Extra escaping for TMUX (yuk!)
+pre_esc=
+post_esc=
+if [ ! -z "$TMUX" ]; then
+	pre_esc='\ePtmux;\e'
+	post_esc='\e\'
+fi
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		--color|--colour)
+			if [ -z "$2" ]; then
+				exit 1
+			fi
+			color=$2
+			shift 2
+			;;
+		--profile)
+			if [ -z "$2" ]; then
+				exit 1
+			fi
+			profile=$2
+			shift 2
+			;;
+		--cursor)
+			if [ -z "$2" ]; then
+				exit 1
+			fi
+			cursor=$2
+			shift 2
+			;;
+		--force)
+			force=1
+			shift
+			;;
+		--help|-h|-?)
+			show_help
+			shift
+			exit 0
+			;;
+		*)
+			echo "Unrecognised option ${1}."
+			exit 1
+			;;
+	esac
+done
+
+# If we're not in iTerm (or we're not forcing things) exit gracefully
+if [ "$TERM_PROGRAM" != "iTerm.app" -a $force -ne 1 ]; then
+	exit 1
+fi
+
+if [ ! -z "$color" ]; then
+
+	printf "${pre_esc}\e]P${color}\e\\"
+
+fi
+
+if [ ! -z "$profile" ]; then
+
+	printf "${pre_esc}\e]50;SetProfile=${profile}\a${post_esc}"
+
+fi
+
+if [ ! -z "$cursor" ]; then
+
+	printf "${pre_esc}\e]50;CursorShape=${cursor}\a${post_esc}"
+
+fi
+
+exit 0
