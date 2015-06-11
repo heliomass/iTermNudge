@@ -32,7 +32,7 @@ Allows you to manipulate iTerm from the command line, even if you're in an ssh s
 		2: Underline
 
 	--force
-		Use this to output the escape codes even if \$TERM_PROGRAM isn't
+		Use this to output the escape codes even if $TERM_PROGRAM isn't
 		set to iTerm. Useful if you're in an ssh session, but you weren't able
 		to pass through TERM_PROGRAM from the client.
 
