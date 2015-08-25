@@ -18,7 +18,7 @@ Allows you to manipulate iTerm from the command line, even if you're in an ssh s
 		m = cursor text
 
 		E.g. Turn the background white:
-		iterm_nudge --background hffffff
+		iterm_nudge --color hffffff
 
 	--profile
 		Changes the profile to the supplied name.
