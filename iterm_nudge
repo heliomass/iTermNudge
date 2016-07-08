@@ -138,13 +138,13 @@ fi
 
 if [ ! -z "$profile" ]; then
 
-	printf "${pre_esc}\e]50;SetProfile=${profile}\a${post_esc}"
+	printf "${pre_esc}\e]1337;SetProfile=${profile}\a${post_esc}"
 
 fi
 
 if [ ! -z "$cursor" ]; then
 
-	printf "${pre_esc}\e]50;CursorShape=${cursor}\a${post_esc}"
+	printf "${pre_esc}\e]1337;CursorShape=${cursor}\a${post_esc}"
 
 fi
 
