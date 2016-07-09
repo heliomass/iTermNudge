@@ -23,6 +23,10 @@ Allows you to manipulate [iTerm 2 v3](https://www.iterm2.com) from the command l
 	--profile
 		Changes the profile to the supplied name.
 
+		E.g. Change profile to "my profile":
+		iterm_nudge --profile my_profile
+
+
 	--cursor
 		Changes the cursor.
 
@@ -31,19 +35,32 @@ Allows you to manipulate [iTerm 2 v3](https://www.iterm2.com) from the command l
 		1: Vertical bar
 		2: Underline
 
+		E.g. Change cursor to underline:
+		iterm_nudge --cursor 2
+
 	--annotate
 		Adds an annotation.
+
+		E.g. Add an annotation saying "Hello World!" (original, I know)
+		iterm_nudge --annotate 'Hello World!'
 
         --badge
                 Sets a badge
 
+		E.g. Set a badge with the current directory:
+		iterm_nudge --badge "$(pwd)"
+
         --clear_badge
                 Clears the badge
+
+		I.e.
+		iterm_nudge --clear_badge
+		(note, this will override the --badge argument if both are supplied)
 
 	--force
 		Use this to output the escape codes even if $TERM_PROGRAM isn't
 		set to iTerm. Useful if you're in an ssh session, but you weren't able
-		to pass through TERM_PROGRAM from the client.
+		to pass through TERM_PROGRAM from the client. Does not require a second argument.
 
 	Run the command without any arguments to discover if you're in an iTerm or not.
 	E.g.:
