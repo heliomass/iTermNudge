@@ -1,6 +1,6 @@
 # iTerm Nudge
 ## What Is It?
-Allows you to manipulate iTerm from the command line, even if you're in an ssh session or within tmux.
+Allows you to manipulate [iTerm 2 v3](https://www.iterm2.com) from the command line, even if you're in an ssh session or within tmux.
 
 ## Usage
 	--color
@@ -49,3 +49,6 @@ Allows you to manipulate iTerm from the command line, even if you're in an ssh s
 	E.g.:
 
 	iterm_nudge && echo "You're in an iTerm session" || echo "You're not running iTerm :("
+
+## Further Reading
+iTerm 2 v3 escape code documentation [is here](https://www.iterm2.com/documentation-escape-codes.html)
