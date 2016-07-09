@@ -48,6 +48,12 @@ Usage:
 	--annotate
 		Adds an annotation.
 
+	--badge
+		Sets a badge
+
+	--clear_badge
+		Clears the badge
+
 	--force
 		Use this to output the escape codes even if \$TERM_PROGRAM isn't
 		set to iTerm. Useful if you're in an ssh session, but you weren't able
@@ -67,6 +73,8 @@ color=
 profile=
 cursor=
 annotate=
+badge=
+clear_badge=0
 
 # Force if not iTerm
 force=0
@@ -108,6 +116,17 @@ while [ $# -gt 0 ]; do
 			fi
 			annotate=$2
 			shift 2
+			;;
+		--badge)
+			if [ -z "$2" ]; then
+				exit 1
+			fi
+			badge=$2
+			shift 2;
+			;;
+		--clear_badge)
+			clear_badge=1
+			shift
 			;;
 		--force)
 			force=1
@@ -151,6 +170,16 @@ fi
 if [ ! -z "$annotate" ]; then
 
 	printf "${pre_esc}\e]1337;AddAnnotation=${annotate}\a${post_esc}"
+
+fi
+
+if [ $clear_badge -eq 1 ]; then
+
+	printf "${pre_esc}\e]1337;SetBadgeFormat=\a${post_esc}"
+
+elif [ ! -z "$badge" ]; then
+
+	printf "${pre_esc}\e]1337;SetBadgeFormat=%s\a${post_esc}" $(echo "$badge" | base64)
 
 fi
 

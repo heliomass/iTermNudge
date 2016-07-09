@@ -34,6 +34,12 @@ Allows you to manipulate iTerm from the command line, even if you're in an ssh s
 	--annotate
 		Adds an annotation.
 
+        --badge
+                Sets a badge
+
+        --clear_badge
+                Clears the badge
+
 	--force
 		Use this to output the escape codes even if $TERM_PROGRAM isn't
 		set to iTerm. Useful if you're in an ssh session, but you weren't able
