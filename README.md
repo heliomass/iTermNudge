@@ -44,14 +44,14 @@ Allows you to manipulate [iTerm 2 v3](https://www.iterm2.com) from the command l
 		E.g. Add an annotation saying "Hello World!" (original, I know)
 		iterm_nudge --annotate 'Hello World!'
 
-        --badge
-                Sets a badge
+	--badge
+		Sets a badge
 
 		E.g. Set a badge with the current directory:
 		iterm_nudge --badge "$(pwd)"
 
-        --clear_badge
-                Clears the badge
+	--clear_badge
+		Clears the badge
 
 		I.e.
 		iterm_nudge --clear_badge
