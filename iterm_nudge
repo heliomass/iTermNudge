@@ -107,38 +107,41 @@ fi
 while [ $# -gt 0 ]; do
 	case "$1" in
 		--color|--colour)
-			if [ -z "$2" ]; then
+			if [ $# -lt 2 ]; then
 				exit 1
 			fi
 			color=$2
 			shift 2
 			;;
 		--profile)
-			if [ -z "$2" ]; then
+			if [ $# -lt 2 ]; then
 				exit 1
 			fi
 			profile=$2
 			shift 2
 			;;
 		--cursor)
-			if [ -z "$2" ]; then
+			if [ $# -lt 2 ]; then
 				exit 1
 			fi
 			cursor=$2
 			shift 2
 			;;
 		--annotate)
-			if [ -z "$2" ]; then
+			if [ $# -lt 2 ]; then
 				exit 1
 			fi
 			annotate=$2
 			shift 2
 			;;
 		--badge)
-			if [ -z "$2" ]; then
+			if [ $# -lt 2 ]; then
 				exit 1
+			elif [ -z "$2" ]; then
+				clear_badge=1
+			else
+				badge=$2
 			fi
-			badge=$2
 			shift 2;
 			;;
 		--clear_badge)
