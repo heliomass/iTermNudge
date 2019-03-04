@@ -56,6 +56,16 @@ Allows you to manipulate [iTerm 2 v3](https://www.iterm2.com) from the command l
 		I.e.
 		iterm_nudge --clear_badge
 		(note, this will override the --badge argument if both are supplied)
+		
+	--tab-color
+		Change the colour of the current tab. Ca be one of:
+
+		    red, orange, yellow, green, blue, violet, gray
+
+		If an invalid colour is provided, it will fail silently
+
+	--tab-reset
+		Reset the colour
 
 	--force
 		Use this to output the escape codes even if $TERM_PROGRAM isn't

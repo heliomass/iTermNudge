@@ -71,6 +71,16 @@ Usage:
 		iterm_nudge --clear_badge
 		(note, this will override the --badge argument if both are supplied)
 
+	--tab-color
+		Change the colour of the current tab. Ca be one of:
+
+		    red, orange, yellow, green, blue, violet, gray
+
+		If an invalid colour is provided, it will fail silently
+
+	--tab-reset
+		Reset the colour
+
 	--force
 		Use this to output the escape codes even if $TERM_PROGRAM isn't
 		set to iTerm. Useful if you're in an ssh session, but you weren't able
@@ -92,6 +102,8 @@ cursor=
 annotate=
 badge=
 clear_badge=0
+tab_color=
+tab_reset=0
 
 # Force if not iTerm
 force=0
@@ -144,6 +156,18 @@ while [ $# -gt 0 ]; do
 			fi
 			shift 2;
 			;;
+		--tab-color|--tab-colour)
+			if [ $# -lt 2 ]; then
+				exit 1
+			else
+				tab_color=$2
+			fi
+			shift 2
+			;;
+		--tab-reset)
+			tab_reset=1
+			shift
+			;;
 		--clear_badge)
 			clear_badge=1
 			shift
@@ -190,7 +214,6 @@ fi
 if [ ! -z "$annotate" ]; then
 
 	printf "${pre_esc}\e]1337;AddAnnotation=${annotate}\a${post_esc}"
-
 fi
 
 if [ $clear_badge -eq 1 ]; then
@@ -200,6 +223,54 @@ if [ $clear_badge -eq 1 ]; then
 elif [ ! -z "$badge" ]; then
 
 	printf "${pre_esc}\e]1337;SetBadgeFormat=%s\a${post_esc}" $(echo "$badge" | base64)
+
+fi
+
+if [ ! -z "tab_color" ]; then
+
+	case "$tab_color" in
+		red)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;255\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;87\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;80\a${post_esc}"
+			;;
+		orange)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;255\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;170\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;11\a${post_esc}"
+			;;
+		yellow)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;242\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;225\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;18\a${post_esc}"
+			;;
+		green)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;168\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;223\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;32\a${post_esc}"
+			;;
+		blue)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;75\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;158\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;255\a${post_esc}"
+			;;
+		violet)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;205\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;130\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;221\a${post_esc}"
+			;;
+		gray|grey)
+			printf "${pre_esc}\033]6;1;bg;red;brightness;120\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;green;brightness;120\a${post_esc}"
+			printf "${pre_esc}\033]6;1;bg;blue;brightness;120\a${post_esc}"
+			;;
+	esac
+
+fi
+
+if [ $tab_reset -eq 1 ]; then
+
+	printf "${pre_esc}\033]6;1;bg;*;default\a${post_esc}"
 
 fi
 
